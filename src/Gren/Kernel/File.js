@@ -1,9 +1,8 @@
 /*
 
-import Elm.Kernel.Json exposing (decodePrim, expecting)
-import Elm.Kernel.List exposing (fromArray)
-import Elm.Kernel.Scheduler exposing (binding, succeed)
-import Elm.Kernel.Utils exposing (Tuple0, Tuple2)
+import Gren.Kernel.Json exposing (decodePrim, expecting)
+import Gren.Kernel.List exposing (fromArray)
+import Gren.Kernel.Scheduler exposing (binding, succeed)
 import Result exposing (Ok)
 import String exposing (join)
 import Time exposing (millisToPosix)
@@ -82,7 +81,7 @@ function _File_downloadUrl(href)
 
 function _File_makeBytesSafeForInternetExplorer(bytes)
 {
-	// only needed by IE10 and IE11 to fix https://github.com/elm/file/issues/10
+	// only needed by IE10 and IE11 to fix https://github.com/gren/file/issues/10
 	// all other browsers can just run `new Blob([bytes])` directly with no problem
 	//
 	return new Uint8Array(bytes.buffer, bytes.byteOffset, bytes.byteLength);
@@ -90,7 +89,7 @@ function _File_makeBytesSafeForInternetExplorer(bytes)
 
 function _File_click(node)
 {
-	// only needed by IE10 and IE11 to fix https://github.com/elm/file/issues/11
+	// only needed by IE10 and IE11 to fix https://github.com/gren/file/issues/11
 	// all other browsers have MouseEvent and do not need this conditional stuff
 	//
 	if (typeof MouseEvent === 'function')
@@ -137,8 +136,8 @@ function _File_uploadOneOrMore(mimes)
 		_File_node.accept = A2(__String_join, ',', mimes);
 		_File_node.addEventListener('change', function(event)
 		{
-			var elmFiles = __List_fromArray(event.target.files);
-			callback(__Scheduler_succeed(__Utils_Tuple2(elmFiles.a, elmFiles.b)));
+			var grenFiles = __List_fromArray(event.target.files);
+			callback(__Scheduler_succeed({ f : grenFiles.a, fs : grenFiles.b }));
 		});
 		_File_click(_File_node);
 	});

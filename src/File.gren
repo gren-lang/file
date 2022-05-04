@@ -25,7 +25,7 @@ module File exposing
 -}
 
 import Bytes exposing (Bytes)
-import Elm.Kernel.File
+import Gren.Kernel.File
 import Json.Decode as Decode
 import Task exposing (Task)
 import Time
@@ -36,7 +36,7 @@ import Time
 
 
 {-| Represents an uploaded file. From there you can read the content, check
-the metadata, send it over [`elm/http`](/packages/elm/http/latest), etc.
+the metadata, send it over [`gren/http`](/packages/gren/http/latest), etc.
 -}
 type File = File
 
@@ -53,11 +53,11 @@ file uploader, you can listen for `drop` events with a decoder like this:
 
 Once you have the files, you can use functions like [`File.toString`](#toString)
 to process the content. Or you can send the file along to someone else with the
-[`elm/http`](/packages/elm/http/latest) package.
+[`gren/http`](/packages/gren/http/latest) package.
 -}
 decoder : Decode.Decoder File
 decoder =
-  Elm.Kernel.File.decoder
+  Gren.Kernel.File.decoder
 
 
 
@@ -79,12 +79,12 @@ file you could read the content like this:
 
 Reading the content is asynchronous because browsers want to avoid allocating
 the file content into memory if possible. (E.g. if you are just sending files
-along to a server with [`elm/http`](/packages/elm/http/latest) there is no
+along to a server with [`gren/http`](/packages/gren/http/latest) there is no
 point having their content in memory!)
 -}
 toString : File -> Task x String
 toString =
-  Elm.Kernel.File.toString
+  Gren.Kernel.File.toString
 
 
 {-| Extract the content of a `File` as `Bytes`. So if you have an `archive.zip`
@@ -101,12 +101,12 @@ file you could read the content like this:
     read file =
       Task.perform ZipLoaded (File.toBytes file)
 
-From here you can use the [`elm/bytes`](/packages/elm/bytes/latest) package to
+From here you can use the [`gren/bytes`](/packages/gren/bytes/latest) package to
 work with the bytes and turn them into whatever you want.
 -}
 toBytes : File -> Task x Bytes
 toBytes =
-  Elm.Kernel.File.toBytes
+  Gren.Kernel.File.toBytes
 
 
 {-| The `File.toUrl` function will convert files into URLs like this:
@@ -126,7 +126,7 @@ sure their old table looks great!
 -}
 toUrl : File -> Task x String
 toUrl =
-  Elm.Kernel.File.toUrl
+  Gren.Kernel.File.toUrl
 
 
 
@@ -141,7 +141,7 @@ toUrl =
 -}
 name : File -> String
 name =
-  Elm.Kernel.File.name
+  Gren.Kernel.File.name
 
 {-| Get the MIME type of a file.
 
@@ -151,7 +151,7 @@ name =
 -}
 mime : File -> String
 mime =
-  Elm.Kernel.File.mime
+  Gren.Kernel.File.mime
 
 
 {-| Get the size of the file in bytes.
@@ -162,7 +162,7 @@ mime =
 -}
 size : File -> Int
 size =
-  Elm.Kernel.File.size
+  Gren.Kernel.File.size
 
 
 {-| Get the time the file was last modified.
@@ -172,8 +172,8 @@ size =
     lastModified file3 -- 1340375405
 
 Learn more about how time is represented by reading through the
-[`elm/time`](/packages/elm/time/latest) package!
+[`gren/time`](/packages/gren/time/latest) package!
 -}
 lastModified : File -> Time.Posix
 lastModified =
-  Elm.Kernel.File.lastModified
+  Gren.Kernel.File.lastModified
