@@ -1,7 +1,6 @@
 /*
 
 import Gren.Kernel.Json exposing (decodePrim, expecting)
-import Gren.Kernel.List exposing (fromArray)
 import Gren.Kernel.Scheduler exposing (binding, succeed)
 import Result exposing (Ok)
 import String exposing (join)
@@ -136,7 +135,7 @@ function _File_uploadOneOrMore(mimes)
 		_File_node.accept = A2(__String_join, ',', mimes);
 		_File_node.addEventListener('change', function(event)
 		{
-			var grenFiles = __List_fromArray(event.target.files);
+			var grenFiles = event.target.files;
 			callback(__Scheduler_succeed({ f : grenFiles.a, fs : grenFiles.b }));
 		});
 		_File_click(_File_node);
