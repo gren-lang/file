@@ -47,7 +47,7 @@ import Task
 -- MAIN
 
 
-main : Program () Model Msg
+main : Program {} Model Msg
 main =
   Browser.element
     { init = init
@@ -66,9 +66,11 @@ type alias Model =
   }
 
 
-init : () -> (Model, Cmd Msg)
+init : {} -> { model: Model, command: Cmd Msg }
 init _ =
-  ( Model Nothing, Cmd.none )
+  { model = { csv = Nothing }
+  , command = Cmd.none
+  }
 
 
 
@@ -81,23 +83,23 @@ type Msg
   | CsvLoaded String
 
 
-update : Msg -> Model -> (Model, Cmd Msg)
+update : Msg -> Model -> { model: Model, command: Cmd Msg }
 update msg model =
   case msg of
     CsvRequested ->
-      ( model
-      , Select.file ["text/csv"] CsvSelected
-      )
+      { model = model
+      , command = Select.file ["text/csv"] CsvSelected
+      }
 
     CsvSelected file ->
-      ( model
-      , Task.perform CsvLoaded (File.toString file)
-      )
+      { model = model
+      , command = Task.perform CsvLoaded (File.toString file)
+      }
 
     CsvLoaded content ->
-      ( { model | csv = Just content }
-      , Cmd.none
-      )
+      { model = { model | csv = Just content }
+      , command = Cmd.none
+      }
 
 
 
