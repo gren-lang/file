@@ -136,7 +136,12 @@ function _File_uploadOneOrMore(mimes)
 		_File_node.addEventListener('change', function(event)
 		{
 			var grenFiles = event.target.files;
-			callback(__Scheduler_succeed({ f : grenFiles.a, fs : grenFiles.b }));
+			var first = grenFiles[0];
+			var rest = [];
+			for (var i=1; i<grenFiles.length; i++) {
+				rest.push(grenFiles[i])
+			}
+			callback(__Scheduler_succeed({ f : first, fs : rest }));
 		});
 		_File_click(_File_node);
 	});
